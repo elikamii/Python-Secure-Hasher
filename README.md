@@ -1,5 +1,7 @@
 import hashlib
 
+def import hashlib
+
 def hash_data(data, algorithm='sha256'):
     """Hashes data using the specified algorithm (md5, sha1, sha256)."""
     encoded_data = data.encode()
