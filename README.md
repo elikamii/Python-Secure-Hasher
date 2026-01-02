@@ -1,17 +1,30 @@
 import hashlib
 
-def generate_hash(text):
-    """Generates a SHA-256 hash for the given string."""
-    # Convert string to bytes
-    encoded_text = text.encode()
-    # Create the hash object
-    hash_object = hashlib.sha256(encoded_text)
-    # Return the hexadecimal representation
-    return hash_object.hexdigest()
+def hash_data(data, algorithm='sha256'):
+    """Hashes data using the specified algorithm (md5, sha1, sha256)."""
+    encoded_data = data.encode()
+    
+    if algorithm == 'sha256':
+        return hashlib.sha256(encoded_data).hexdigest()
+    elif algorithm == 'md5':
+        return hashlib.md5(encoded_data).hexdigest()
+    elif algorithm == 'sha1':
+        return hashlib.sha1(encoded_data).hexdigest()
+    else:
+        return "Unsupported algorithm"
 
-# Example usage
-input_data = "my_secure_password_123"
-hashed_result = generate_hash(input_data)
+def verify_data(plain_text, existing_hash, algorithm='sha256'):
+    """Checks if the plain text matches the given hash."""
+    new_hash = hash_data(plain_text, algorithm)
+    return new_hash == existing_hash
 
-print(f"Original Data: {input_data}")
-print(f"SHA-256 Hash: {hashed_result}")
+# Test scenarios
+secret = "SecretKey2026"
+stored_hash = hash_data(secret, 'sha256')
+
+print(f"Data: {secret}")
+print(f"Stored Hash: {stored_hash}")
+
+# Verification check
+is_valid = verify_data("SecretKey2026", stored_hash)
+print(f"Verification Result: {'✅ Match' if is_valid else '❌ No Match'}")
